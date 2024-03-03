@@ -36,72 +36,62 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        body: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(10),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                TextFormField(
-                  controller: callIDController,
-                  decoration: const InputDecoration(
-                    labelText: 'join a video call by id',
-                  ),
-                ),
-                TextFormField(
-                  controller: usernameController,
-                  decoration: const InputDecoration(
-                    labelText: 'username',
-                  ),
-                ),
-
-                const SizedBox(height: 12),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              TextFormField(
+                controller: callIDController,
+                decoration: const InputDecoration(labelText: 'Join a video call by id'),
+              ),
+              TextFormField(
+                controller: usernameController,
+                decoration: const InputDecoration(labelText: 'username'),
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) => CallPage(
-                          id: callIDController.text,
-                          userId: nanoid(),
-                          username:usernameController.text,
+                          callID: callIDController.text,
+                          userID: nanoid(),
+                          username: usernameController.text,
                         ),
-                      ),
-                    );
-                  },
-                  child: const Text('join'),
-                ),
-              ],
-            ),
+                      ));
+                },
+                child: const Text("Join"),
+              )
+            ],
           ),
-        ));
+        ),
+      ),
+    );
   }
 }
 
 class CallPage extends StatelessWidget {
-  const CallPage({
-    super.key,
-    required this.id,
-    required this.username,
-    required this.userId,
-  });
-
-  final String id;
-  final String userId;
+  const CallPage({Key? key, required this.callID, required this.userID, required this.username}) : super(key: key);
+  final String callID;
+  final String userID;
   final String username;
 
   @override
   Widget build(BuildContext context) {
     return ZegoUIKitPrebuiltCall(
-      appID: 1638232801,
+      appID: 147764462,
       // Fill in the appID that you get from ZEGOCLOUD Admin Console.
-      appSign: "a9ccfd452c3e48c960255681a4a7c01e6f5aeedadb8330b92c999849da22acfc",
+      appSign: "de6269e5b18e2895bfcb91c7eefafc0fab1a7821eee064754cf668b0ad74c184",
       // Fill in the appSign that you get from ZEGOCLOUD Admin Console.
-      userID: userId,
+      userID: userID,
       userName: username,
-      callID: id,
+      callID: callID,
       // You can also use groupVideo/groupVoice/oneOnOneVoice to make more types of calls.
       config: ZegoUIKitPrebuiltCallConfig.oneOnOneVideoCall(),
     );
